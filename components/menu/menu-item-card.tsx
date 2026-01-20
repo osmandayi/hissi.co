@@ -15,10 +15,10 @@ export function MenuItemCard({ item, index }: MenuItemCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="group relative bg-card rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+      className="group relative bg-card rounded-2xl overflow-hidden shadow-sm hover:shadow-md duration-300 transition-colors hover:text-foreground hover:bg-muted"
     >
       <div className="flex gap-4 p-4">
-        <div className="relative w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden">
+        <div className="relative w-24 h-24 rounded-xl overflow-hidden">
           <Image
             src={item.image || "/placeholder.svg"}
             alt={item.name}
