@@ -7,7 +7,7 @@ import { MenuSection } from "@/components/menu/menu-section";
 import { MenuFooter } from "@/components/menu/footer";
 
 export default function MenuPage() {
-  const [activeCategory, setActiveCategory] = useState("coffee");
+  const [activeCategory, setActiveCategory] = useState("coffees");
 
   return (
     <main className="min-h-screen bg-background">
