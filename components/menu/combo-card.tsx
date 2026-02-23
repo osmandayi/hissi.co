@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import Image from "next/image";
+import { Check, Sparkles } from "lucide-react";
 import type { ComboItem } from "@/lib/menu-data";
 
 interface ComboCardProps {
@@ -11,53 +11,69 @@ interface ComboCardProps {
 }
 
 export function ComboCard({ combo, index }: ComboCardProps) {
-  const discount = Math.round(((combo.originalPrice - combo.price) / combo.originalPrice) * 100);
+  const discount = combo.originalPrice - combo.price;
+  const discountPercent = Math.round((discount / combo.originalPrice) * 100);
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.15 }}
-      className="group relative bg-card rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      className="group relative bg-linear-to-br from-card via-card to-secondary/30 rounded-2xl overflow-hidden border border-primary/20 hover:border-primary/40 hover:shadow-xl transition-all duration-300"
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
-        <Image
-          src={combo.image || "/placeholder.svg"}
-          alt={combo.name}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-700"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-        
-        <div className="absolute top-3 right-3 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full">
-          %{discount} İndirim
-        </div>
-        
-        <div className="absolute bottom-4 left-4 right-4">
-          <h3 className="font-serif text-xl font-bold text-white drop-shadow-lg">
-            {combo.name}
-          </h3>
-        </div>
-      </div>
-      
-      <div className="p-4">
-        <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-          {combo.description}
-        </p>
-        
-        <div className="space-y-1.5 mb-4">
-          {combo.items.map((item, i) => (
-            <div key={i} className="flex items-center gap-2 text-sm text-foreground">
-              <Check className="w-4 h-4 text-primary flex-shrink-0" />
-              <span>{item}</span>
+      <div className="flex gap-4 p-4">
+        {/* Görsel */}
+        {combo.image && (
+          <div className="relative w-28 h-28 shrink-0 rounded-xl overflow-hidden shadow-md">
+            <Image
+              src={combo.image || "/placeholder.svg"}
+              alt={combo.name}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              sizes="112px"
+            />
+            {/* İndirim rozeti */}
+            <div className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-[10px] font-bold px-2 py-1 rounded-bl-lg rounded-tr-xl shadow-lg">
+              %{discountPercent}
             </div>
-          ))}
-        </div>
-        
-        <div className="flex items-center justify-between pt-3 border-t border-border">
-          <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold text-primary">{combo.price} ₺</span>
-            <span className="text-sm text-muted-foreground line-through">{combo.originalPrice} ₺</span>
+          </div>
+        )}
+
+        {/* İçerik */}
+        <div className="flex-1 min-w-0 flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-accent" />
+              <h3 className="font-serif font-bold text-foreground text-lg leading-tight">
+                {combo.name}
+              </h3>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              {combo.description}
+            </p>
+
+            {/* İçindekiler */}
+            <div className="mt-2 space-y-1">
+              {combo.items.map((item, i) => (
+                <div key={i} className="flex items-center gap-1.5 text-xs text-foreground/80">
+                  <Check className="w-3 h-3 text-primary" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Fiyatlar */}
+          <div className="flex items-end gap-2 mt-3">
+            <span className="text-xl font-bold text-primary">
+              {combo.price} ₺
+            </span>
+            <span className="text-sm text-muted-foreground line-through mb-0.5">
+              {combo.originalPrice} ₺
+            </span>
+            <span className="text-xs bg-primary/10 text-primary font-semibold px-2 py-0.5 rounded-full ml-auto">
+              {discount} ₺ tasarruf
+            </span>
           </div>
         </div>
       </div>
