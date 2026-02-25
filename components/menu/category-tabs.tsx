@@ -21,7 +21,7 @@ export function CategoryTabs({
 }: CategoryTabsProps) {
   return (
     <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
-      <nav className="flex justify-center gap-1 p-2 overflow-x-auto scrollbar-hide">
+      <nav className="flex justify-center md:gap-1 md:px-2 px-0 py-2 overflow-x-auto scrollbar-hide">
         {categories.map((category) => {
           const Icon = category.icon;
           const isActive = activeCategory === category.id;
